@@ -3,18 +3,18 @@
 #include <string.h>
 #include <time.h>
 
-// ¿ìµİ½á¹¹Ìå
+// å¿«é€’ç»“æ„ä½“
 typedef struct Package {
-    char id[20];       // ¿ìµİµ¥ºÅ
-    char phone[12];    // ÊÕ¼şÈËÊÖ»úºÅ
-    int status;        // 0-Î´µ½Õ¾ 1-´ıÈ¡¼ş 2-ÒÑÈ¡¼ş
-    char code[6];      // È¡¼şÂë
+    char id[20];       // å¿«é€’å•å·
+    char phone[12];    // æ”¶ä»¶äººæ‰‹æœºå·
+    int status;        // 0-æœªåˆ°ç«™ 1-å¾…å–ä»¶ 2-å·²å–ä»¶
+    char code[6];      // å–ä»¶ç 
     struct Package* next;
 } Package;
-Package* head = NULL;  // Á´±íÍ·½Úµã
-const char* status_str [] = {"Î´µ½Õ¾", "´ıÈ¡¼ş", "ÒÑÈ¡¼ş"};
+Package* head = NULL;  // é“¾è¡¨å¤´èŠ‚ç‚¹
+const char* status_str [] = {"æœªåˆ°ç«™", "å¾…å–ä»¶", "å·²å–ä»¶"};
 
-// º¯ÊıÉùÃ÷
+// å‡½æ•°å£°æ˜
 void addPackage();
 void generateCode(char* code);
 void saveToFile();
@@ -24,16 +24,16 @@ void takePackage();
 void searchPackage();
 
 int main() {
-    loadFromFile();  // Æô¶¯Ê±¼ÓÔØÊı¾İ
+    loadFromFile();  // å¯åŠ¨æ—¶åŠ è½½æ•°æ®
     int choice;
     do {
-        system("cls");  // Çå³ıÆÁÄ»
+        system("cls");  // æ¸…é™¤å±å¹•
         printMenu();
         if (scanf("%d", &choice) != 1) {
-            // Çå³ıÊäÈë»º³åÇø
+            // æ¸…é™¤è¾“å…¥ç¼“å†²åŒº
             while (getchar() != '\n');
-            printf("ÎŞĞ§µÄÊäÈë£¡ÇëÖØĞÂÊäÈë¡£\n");
-            system("pause");  // ÔİÍ£ÒÔ±ãÓÃ»§¿´µ½ÌáÊ¾ĞÅÏ¢
+            printf("æ— æ•ˆçš„è¾“å…¥ï¼è¯·é‡æ–°è¾“å…¥ã€‚\n");
+            system("pause");  // æš‚åœä»¥ä¾¿ç”¨æˆ·çœ‹åˆ°æç¤ºä¿¡æ¯
             continue;
         }
         switch(choice) {
@@ -41,18 +41,18 @@ int main() {
             case 2: takePackage(); break;
             case 3: searchPackage(); break;
             case 4: saveToFile(); break;
-            case 0: break;  // ÍË³ö
+            case 0: break;  // é€€å‡º
             default: 
-                printf("ÎŞĞ§µÄ²Ù×÷£¡ÇëÖØĞÂÊäÈë¡£\n");
-                system("pause");  // ÔİÍ£ÒÔ±ãÓÃ»§¿´µ½ÌáÊ¾ĞÅÏ¢
-                continue;  // ÖØĞÂÏÔÊ¾²Ëµ¥
+                printf("æ— æ•ˆçš„æ“ä½œï¼è¯·é‡æ–°è¾“å…¥ã€‚\n");
+                system("pause");  // æš‚åœä»¥ä¾¿ç”¨æˆ·çœ‹åˆ°æç¤ºä¿¡æ¯
+                continue;  // é‡æ–°æ˜¾ç¤ºèœå•
         }
-        system("pause");  // ÔİÍ£ÒÔ±ãÓÃ»§¿´µ½ÌáÊ¾ĞÅÏ¢
+        system("pause");  // æš‚åœä»¥ä¾¿ç”¨æˆ·çœ‹åˆ°æç¤ºä¿¡æ¯
     } while(choice != 0);
     return 0;
 }
 
-// Éú³É4Î»È¡¼şÂë£¨×ÖÄ¸+Êı×Ö£©
+// ç”Ÿæˆ4ä½å–ä»¶ç ï¼ˆå­—æ¯+æ•°å­—ï¼‰
 void generateCode(char* code) {
     srand(time(NULL));
     int i;
@@ -65,53 +65,53 @@ void generateCode(char* code) {
     code[4] = '\0';
 }
 
-// Ìí¼Ó¿ìµİ
+// æ·»åŠ å¿«é€’
 void addPackage() {
     Package* pkg = (Package*)malloc(sizeof(Package));
-    printf("ÊäÈë¿ìµİµ¥ºÅ: ");
+    printf("è¾“å…¥å¿«é€’å•å·: ");
     scanf("%s", pkg->id);
-    printf("ÊäÈëÊÕ¼şÈËÊÖ»úºÅ: ");
+    printf("è¾“å…¥æ”¶ä»¶äººæ‰‹æœºå·: ");
     scanf("%s", pkg->phone);
     
-    generateCode(pkg->code);  // Éú³ÉÈ¡¼şÂë
-    pkg->status = 1;          // Ä¬ÈÏ´ıÈ¡¼ş
+    generateCode(pkg->code);  // ç”Ÿæˆå–ä»¶ç 
+    pkg->status = 1;          // é»˜è®¤å¾…å–ä»¶
     pkg->next = head;
     head = pkg;
     
-    printf("¿ìµİÒÑÈë¿â£¡È¡¼şÂë£º%s\n", pkg->code);
-    system("pause");  // ÔİÍ£ÒÔ±ãÓÃ»§¿´µ½ÌáÊ¾ĞÅÏ¢
+    printf("å¿«é€’å·²å…¥åº“ï¼å–ä»¶ç ï¼š%s\n", pkg->code);
+    system("pause");  // æš‚åœä»¥ä¾¿ç”¨æˆ·çœ‹åˆ°æç¤ºä¿¡æ¯
 }
 
-// È¡¼ş²Ù×÷
+// å–ä»¶æ“ä½œ
 void takePackage() {
     char code[6];
-    printf("ÊäÈëÈ¡¼şÂë: ");
+    printf("è¾“å…¥å–ä»¶ç : ");
     scanf("%s", code);
     
     Package* p = head;
     while(p != NULL) {
         if(strcmp(p->code, code) == 0 && p->status == 1) {
             p->status = 2;
-            printf("È¡¼ş³É¹¦£¡\n");
+            printf("å–ä»¶æˆåŠŸï¼\n");
             
-            // ¡¾À©Õ¹¹¦ÄÜ¡¿Ä£Äâ¶ÌĞÅÍ¨Öª
+            // ã€æ‰©å±•åŠŸèƒ½ã€‘æ¨¡æ‹ŸçŸ­ä¿¡é€šçŸ¥
             int phone_length = strlen(p->phone);
             if (phone_length >= 4) {
-                printf("[Ä£Äâ¶ÌĞÅ] Î²ºÅ%sÓÃ»§£¬¿ìµİ%sÒÑÇ©ÊÕ\n", 
+                printf("[æ¨¡æ‹ŸçŸ­ä¿¡] å°¾å·%sç”¨æˆ·ï¼Œå¿«é€’%så·²ç­¾æ”¶\n", 
                        p->phone + phone_length - 4, p->id);
             } else {
-                printf("[Ä£Äâ¶ÌĞÅ] ÊÖ»úºÅ³¤¶È²»×ã£¬ÎŞ·¨ÏÔÊ¾Î²ºÅ¡£¿ìµİ%sÒÑÇ©ÊÕ\n", p->id);
+                printf("[æ¨¡æ‹ŸçŸ­ä¿¡] æ‰‹æœºå·é•¿åº¦ä¸è¶³ï¼Œæ— æ³•æ˜¾ç¤ºå°¾å·ã€‚å¿«é€’%så·²ç­¾æ”¶\n", p->id);
             }
-            system("pause");  // ÔİÍ£ÒÔ±ãÓÃ»§¿´µ½ÌáÊ¾ĞÅÏ¢
+            system("pause");  // æš‚åœä»¥ä¾¿ç”¨æˆ·çœ‹åˆ°æç¤ºä¿¡æ¯
             return;
         }
         p = p->next;
     }
-    printf("È¡¼şÂëÎŞĞ§»ò¿ìµİÒÑÈ¡×ß£¡\n");
-    system("pause");  // ÔİÍ£ÒÔ±ãÓÃ»§¿´µ½ÌáÊ¾ĞÅÏ¢
+    printf("å–ä»¶ç æ— æ•ˆæˆ–å¿«é€’å·²å–èµ°ï¼\n");
+    system("pause");  // æš‚åœä»¥ä¾¿ç”¨æˆ·çœ‹åˆ°æç¤ºä¿¡æ¯
 }
 
-// Êı¾İ³Ö¾Ã»¯
+// æ•°æ®æŒä¹…åŒ–
 void saveToFile() {
     FILE* fp = fopen("packages.txt", "w");
     Package* p = head;
@@ -121,11 +121,11 @@ void saveToFile() {
         p = p->next;
     }
     fclose(fp);
-    printf("Êı¾İÒÑ±£´æ£¡\n");
-    system("pause");  // ÔİÍ£ÒÔ±ãÓÃ»§¿´µ½ÌáÊ¾ĞÅÏ¢
+    printf("æ•°æ®å·²ä¿å­˜ï¼\n");
+    system("pause");  // æš‚åœä»¥ä¾¿ç”¨æˆ·çœ‹åˆ°æç¤ºä¿¡æ¯
 }
 
-// ¼ÓÔØÊı¾İ
+// åŠ è½½æ•°æ®
 void loadFromFile() {
     FILE* fp = fopen("packages.txt", "r");
     if(fp == NULL) return;
@@ -145,33 +145,33 @@ void loadFromFile() {
     fclose(fp);
 }
 
-// ²Ëµ¥½çÃæ
+// èœå•ç•Œé¢
 void printMenu() {
-    printf("\n==== ²ËÄñæäÕ¾ÏµÍ³ ====\n");
-    printf("1. Ìí¼Ó¿ìµİ\n");
-    printf("2. È¡¼ş\n");
-    printf("3. ²éÑ¯¿ìµİ\n");
-    printf("4. ±£´æÊı¾İ\n");
-    printf("0. ÍË³ö\n");
-    printf("ÇëÑ¡Ôñ²Ù×÷: ");
+    printf("\n==== èœé¸Ÿé©¿ç«™ç³»ç»Ÿ ====\n");
+    printf("1. æ·»åŠ å¿«é€’\n");
+    printf("2. å–ä»¶\n");
+    printf("3. æŸ¥è¯¢å¿«é€’\n");
+    printf("4. ä¿å­˜æ•°æ®\n");
+    printf("0. é€€å‡º\n");
+    printf("è¯·é€‰æ‹©æ“ä½œ: ");
 }
 
-// ²éÑ¯¹¦ÄÜ£¨À©Õ¹¹¦ÄÜ£©
+// æŸ¥è¯¢åŠŸèƒ½ï¼ˆæ‰©å±•åŠŸèƒ½ï¼‰
 void searchPackage() {
     char key[20];
-    printf("ÊäÈëµ¥ºÅ/ÊÖ»úºÅ: ");
+    printf("è¾“å…¥å•å·/æ‰‹æœºå·: ");
     scanf("%s", key);
     
     Package* p = head;
     while(p != NULL) {
         if(strcmp(p->id, key)==0 || strcmp(p->phone, key)==0) {
-            printf("[µ¥ºÅ:%s] ×´Ì¬:%s È¡¼şÂë:%s\n",
+            printf("[å•å·:%s] çŠ¶æ€:%s å–ä»¶ç :%s\n",
                    p->id, status_str[p->status], p->code);
-            system("pause");  // ÔİÍ£ÒÔ±ãÓÃ»§¿´µ½ÌáÊ¾ĞÅÏ¢
+            system("pause");  // æš‚åœä»¥ä¾¿ç”¨æˆ·çœ‹åˆ°æç¤ºä¿¡æ¯
             return;
         }
         p = p->next;
     }
-    printf("Î´ÕÒµ½Ïà¹Ø¿ìµİ£¡\n");
-    system("pause");  // ÔİÍ£ÒÔ±ãÓÃ»§¿´µ½ÌáÊ¾ĞÅÏ¢
+    printf("æœªæ‰¾åˆ°ç›¸å…³å¿«é€’ï¼\n");
+    system("pause");  // æš‚åœä»¥ä¾¿ç”¨æˆ·çœ‹åˆ°æç¤ºä¿¡æ¯
 }
