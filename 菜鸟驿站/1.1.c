@@ -3,6 +3,7 @@
 #include <string.h>
 #include <time.h>
 int n;
+int m;
 // 快递结构体
 typedef struct Package {
     char id[20];       // 快递单号
