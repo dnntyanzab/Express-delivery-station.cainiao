@@ -11,7 +11,7 @@ typedef struct Package {
     char code[6];      // 取件码
     struct Package* next;
 } Package;
-
+//测试
 Package* head = NULL;  // 链表头节点
 const char* status_str [] = {"未到站", "待取件", "已取件"};
 
